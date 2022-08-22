@@ -1,6 +1,5 @@
 package io.cometkey.key.domain;
 
-import io.cometkey.key.domain.type.Mifare;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -17,16 +16,18 @@ public class Key {
 
     @Id
     @GeneratedValue
-    @Column(name = "delivery_id")
+    @Column(name = "key_id")
     @Setter(AccessLevel.NONE)
     private Long id;
 
     @NotNull
-    private Long orderId;
+    private String encryptedKey;
 
-    @Embedded
     @NotNull
-    private Mifare mifare;
+    private String provider;    // 제공회사
+
+    @NotNull
+    private Boolean isUsed;     // 배송기사 사용 여부
 
     @LastModifiedDate
     @Setter(AccessLevel.NONE)
@@ -36,8 +37,12 @@ public class Key {
     private LocalDateTime createdAt;
 
     @Builder
-    public Key(Long orderId, Mifare mifare) {
-        this.orderId = orderId;
-        this.mifare = mifare;
+    public Key(String encryptedKey, String provider, Boolean isUsed) {
+        this.encryptedKey = encryptedKey;
+        this.provider = provider;
+        this.isUsed = isUsed;
     }
+
+    @PrePersist
+    public void PrePersist() { this.isUsed = this.isUsed != null && this.isUsed; }
 }
