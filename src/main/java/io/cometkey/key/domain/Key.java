@@ -35,9 +35,6 @@ public class Key {
     public Key(String encryptedKey, String provider, Boolean isUsed) {
         this.encryptedKey = encryptedKey;
         this.provider = provider;
-        this.isUsed = isUsed;
+        this.isUsed = this.isUsed != null && this.isUsed;
     }
-
-    @PrePersist
-    public void PrePersist() { this.isUsed = this.isUsed != null && this.isUsed; }
 }
