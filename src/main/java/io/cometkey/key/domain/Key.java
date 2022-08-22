@@ -8,15 +8,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "KEY")
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Key {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "key_id")
     @Setter(AccessLevel.NONE)
     private Long id;
 
