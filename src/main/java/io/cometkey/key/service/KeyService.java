@@ -11,7 +11,7 @@ import java.util.List;
 public class KeyService {
 
     public List<Key> getKey(List<Long> idList) {
-        //TODO: worker에 해당 id들 GET 요청
+        //TODO: worker에 해당 id들 key list GET 요청
         return null;
     }
 
