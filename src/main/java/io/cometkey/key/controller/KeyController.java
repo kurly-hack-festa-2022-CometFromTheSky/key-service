@@ -1,5 +1,6 @@
 package io.cometkey.key.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.cometkey.key.domain.Key;
 import io.cometkey.key.request.KeyList;
 import io.cometkey.key.request.NewKey;
@@ -24,21 +25,10 @@ public class KeyController {
     private final KeyService keyService;
 
     @GetMapping("/v1/key")
-    public KeyResponse GetKeyInfo(@Valid @RequestBody KeyList keyList) {
-
-        List<UsageResponse> keyResponse = new ArrayList<>();
-        List<Key> keys = this.keyService.getKey(keyList.getIdList());
-
-        for (Key key : keys) {
-            keyResponse.add(UsageResponse.builder()
-                    .provider(key.getProvider())
-                    .isUsed(key.getIsUsed())
-                    .build()
-            );
-        }
+    public KeyResponse GetKeyInfo(@Valid @RequestBody KeyList keyList) throws JsonProcessingException {
 
         return KeyResponse.builder()
-                .usageResponseList(keyResponse)
+                .usageResponseList(this.keyService.getKey(keyList.getIdList()))
                 .build();
     }
 
