@@ -35,6 +35,6 @@ public class Key {
     public Key(String encryptedKey, String provider, Boolean isUsed) {
         this.encryptedKey = encryptedKey;
         this.provider = provider;
-        this.isUsed = this.isUsed != null && this.isUsed;
+        this.isUsed = isUsed != null && isUsed;
     }
 }
