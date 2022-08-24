@@ -1,4 +1,4 @@
-package io.cometkey.key.response;
+package io.cometkey.key.controller.response;
 
 import lombok.*;
 

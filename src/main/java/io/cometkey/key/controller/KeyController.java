@@ -2,9 +2,9 @@ package io.cometkey.key.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.cometkey.key.domain.Key;
-import io.cometkey.key.request.NewKey;
-import io.cometkey.key.request.TokenList;
-import io.cometkey.key.response.KeyResponse;
+import io.cometkey.key.controller.request.NewKey;
+import io.cometkey.key.controller.request.TokenList;
+import io.cometkey.key.controller.response.KeyResponse;
 import io.cometkey.key.service.KeyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

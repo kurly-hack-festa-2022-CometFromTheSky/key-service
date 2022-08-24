@@ -3,7 +3,7 @@ package io.cometkey.key.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cometkey.key.domain.Key;
-import io.cometkey.key.response.UsageResponse;
+import io.cometkey.key.controller.response.UsageResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
