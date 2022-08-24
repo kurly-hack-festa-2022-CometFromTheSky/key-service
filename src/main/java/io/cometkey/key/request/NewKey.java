@@ -14,13 +14,9 @@ public class NewKey {
     @NotNull
     private String provider;    // 제공회사
 
-    @NotNull
-    private Boolean isUsed;     // 배송기사 사용 여부
-
     @Builder
-    public NewKey(String encryptedKey, String provider, Boolean isUsed) {
+    public NewKey(String encryptedKey, String provider) {
         this.encryptedKey = encryptedKey;
         this.provider = provider;
-        this.isUsed = isUsed;
     }
 }

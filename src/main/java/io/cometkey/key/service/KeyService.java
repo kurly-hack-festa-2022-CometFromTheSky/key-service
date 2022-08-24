@@ -6,10 +6,12 @@ import io.cometkey.key.domain.Key;
 import io.cometkey.key.response.UsageResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,11 +24,16 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class KeyService {
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-    public List<UsageResponse> getKey(List<Long> idList) throws JsonProcessingException {
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
-        //TODO: worker에 해당 id들 key list GET 요청
+    private static final String TOPIC_NAME = "newKey";
+
+
+    public List<UsageResponse> getKey(List<String> tokenList) throws JsonProcessingException {
+
+        //DONE: worker에 해당 id들 key list GET 요청
         //TODO: workerUrl 배포 후 수정
         String workerUrl = "http://localhost:8080";
         String getKeyUrl = "/v1/worker/key";
@@ -36,9 +43,9 @@ public class KeyService {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         //Body
-        Map<String, List<Long>> body = new LinkedHashMap<>();
-        body.put("idList", idList);
-        String param = objectMapper.writeValueAsString(body);
+        Map<String, List<String>> body = new LinkedHashMap<>();
+        body.put("tokenList", tokenList);
+        String param = this.objectMapper.writeValueAsString(body);
         HttpEntity entity = new HttpEntity(param, httpHeaders);
 
         //Request
@@ -49,10 +56,11 @@ public class KeyService {
         return responseEntity.getBody().getUsageResponses();
     }
 
-    public Long addNewKey(Key key) {
+    public void addNewKey(Key key) throws JsonProcessingException {
 
-        //TODO: Kafka produce -> 해당 key POST 요청 후 등록된 id 받아서 반환
-        return null;
+        //DONE: Kafka produce -> 해당 key POST 요청
+        String messageData = this.objectMapper.writeValueAsString(key);
+        this.kafkaTemplate.send(new ProducerRecord<>(TOPIC_NAME, messageData));
     }
 }
 
